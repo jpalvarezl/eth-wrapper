@@ -1,4 +1,5 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useState, useEffect } from 'react';
+import { BigNumber, ethers } from 'ethers';
 import styled from 'styled-components';
 import { Button, Loader, Title } from '@gnosis.pm/safe-react-components';
 import { useSafeAppsSDK } from '@gnosis.pm/safe-apps-react-sdk';
@@ -15,8 +16,20 @@ const Container = styled.form`
 `;
 
 const App: React.FC = () => {
+
   const { sdk, safe } = useSafeAppsSDK();
   const [submitting, setSubmitting] = useState(false);
+  const [balance, setBalance] = useState("loading state");
+
+  useEffect(() => {
+    fetchBalance();
+    console.log("Updating balance");
+  }, [safe, sdk]);
+
+  async function fetchBalance() {
+    const balanceEth = await sdk.eth.getBalance([safe.safeAddress]);
+    setBalance(ethers.utils.formatEther(balanceEth));
+  }
 
   const submitTx = useCallback(async () => {
     setSubmitting(true);
@@ -42,6 +55,7 @@ const App: React.FC = () => {
   return (
     <Container>
       <Title size="md">{safe.safeAddress}</Title>
+      <Title size="md">{balance}</Title>
       {submitting ? (
         <>
           <Loader size="md" />
@@ -57,10 +71,10 @@ const App: React.FC = () => {
           </Button>
         </>
       ) : (
-        <Button size="lg" color="primary" onClick={submitTx}>
-          Submit
-        </Button>
-      )}
+          <Button size="lg" color="primary" onClick={submitTx}>
+            Submit
+          </Button>
+        )}
     </Container>
   );
 };
