@@ -3,6 +3,7 @@ import { BigNumber, ethers } from 'ethers';
 import styled from 'styled-components';
 import { Button, Loader, Title } from '@gnosis.pm/safe-react-components';
 import { useSafeAppsSDK } from '@gnosis.pm/safe-apps-react-sdk';
+import Balance from './components/Balance';
 
 const Container = styled.form`
   margin-bottom: 2rem;
@@ -19,17 +20,17 @@ const App: React.FC = () => {
 
   const { sdk, safe } = useSafeAppsSDK();
   const [submitting, setSubmitting] = useState(false);
-  const [balance, setBalance] = useState("loading state");
+  // const [balance, setBalance] = useState("loading state");
 
-  useEffect(() => {
-    fetchBalance();
-    console.log("Updating balance");
-  }, [safe, sdk]);
+  // useEffect(() => {
+  //   fetchBalance();
+  //   console.log("Updating balance");
+  // }, [safe, sdk]);
 
-  async function fetchBalance() {
-    const balanceEth = await sdk.eth.getBalance([safe.safeAddress]);
-    setBalance(ethers.utils.formatEther(balanceEth));
-  }
+  // async function fetchBalance() {
+  //   const balanceEth = await sdk.eth.getBalance([safe.safeAddress]);
+  //   setBalance(ethers.utils.formatEther(balanceEth));
+  // }
 
   const submitTx = useCallback(async () => {
     setSubmitting(true);
@@ -55,7 +56,7 @@ const App: React.FC = () => {
   return (
     <Container>
       <Title size="md">{safe.safeAddress}</Title>
-      <Title size="md">{balance}</Title>
+      <Balance />
       {submitting ? (
         <>
           <Loader size="md" />
