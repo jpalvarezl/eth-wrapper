@@ -3,19 +3,10 @@ import { Title } from '@gnosis.pm/safe-react-components';
 import { SafeAppsSdkProvider } from '@gnosis.pm/safe-apps-ethers-provider';
 import { ethers } from 'ethers';
 import { useSafeAppsSDK } from '@gnosis.pm/safe-apps-react-sdk';
-const WETH_ADDRESS = "0xc778417E063141139Fce010982780140Aa0cD5Ab";
-
-const Erc20 = [
-    "function approve(address _spender, uint256 _value) public returns (bool success)",
-    "function allowance(address _owner, address _spender) public view returns (uint256 remaining)",
-    "function balanceOf(address _owner) public view returns (uint256 balance)",
-    "event Approval(address indexed _owner, address indexed _spender, uint256 _value)"
-];
-
-const Erc20Interface = new ethers.utils.Interface(Erc20)
+import { WETH_ADDRESS, Erc20 } from '../utils/Erc20Constants'
 
 const WethBalance: React.FC = () => {
-    const [balance, setBalance] = useState("loading state");
+    const [balance, setBalance] = useState("");
 
     const { sdk, safe } = useSafeAppsSDK();
     const provider = useMemo(() => new SafeAppsSdkProvider(safe, sdk), [safe, sdk]);
@@ -23,12 +14,12 @@ const WethBalance: React.FC = () => {
 
     async function fetchBalance() {
         const balanceWeth = await weth.balanceOf(safe.safeAddress);
-        setBalance(balanceWeth.toString());
+        setBalance(ethers.utils.formatEther(balanceWeth));
     }
 
     useEffect(() => {
         fetchBalance();
-        console.log("Updating balance");
+        console.log("Updating WETH balance");
     }, []);
 
     return <Title size="md" >WETH Balance: {balance}</Title>
