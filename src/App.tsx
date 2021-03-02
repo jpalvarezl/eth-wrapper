@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import { Button, Loader, Title } from '@gnosis.pm/safe-react-components';
 import { useSafeAppsSDK } from '@gnosis.pm/safe-apps-react-sdk';
 import EthBalance from './components/EthBalance';
+import WethBalance from './components/WethBalance';
 
 const Container = styled.form`
   margin-bottom: 2rem;
@@ -45,6 +46,7 @@ const App: React.FC = () => {
     <Container>
       <Title size="md">{safe.safeAddress}</Title>
       <EthBalance />
+      <WethBalance />
       {submitting ? (
         <>
           <Loader size="md" />

@@ -17,7 +17,7 @@ const EthBalance: React.FC = () => {
         console.log("Updating balance");
     }, []);
 
-    return <Title size="md" >{balance}</Title>
+    return <Title size="md" >ETH balance: {balance}</Title>
 }
 
 export default EthBalance;

@@ -22,8 +22,8 @@ const WethBalance: React.FC = () => {
     const weth = useMemo(() => new ethers.Contract(WETH_ADDRESS, Erc20, provider), [provider]);
 
     async function fetchBalance() {
-        const balanceEth = await sdk.eth.getBalance([safe.safeAddress]);
-        setBalance(ethers.utils.formatEther(balanceEth));
+        const balanceWeth = await weth.balanceOf(safe.safeAddress);
+        setBalance(balanceWeth.toString());
     }
 
     useEffect(() => {
@@ -31,7 +31,7 @@ const WethBalance: React.FC = () => {
         console.log("Updating balance");
     }, []);
 
-    return <Title size="md" >{balance}</Title>
+    return <Title size="md" >WETH Balance: {balance}</Title>
 }
 
 export default WethBalance;
