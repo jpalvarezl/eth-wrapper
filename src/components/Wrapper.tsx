@@ -1,7 +1,7 @@
 import React, { useCallback, useState } from 'react';
 import { useSafeAppsSDK } from '@gnosis.pm/safe-apps-react-sdk';
 import { TextField } from '@material-ui/core';
-import { Button, Title } from '@gnosis.pm/safe-react-components';
+import { Button, } from '@gnosis.pm/safe-react-components';
 import { WETH_ADDRESS } from '../utils/Erc20Constants';
 import { ethers } from 'ethers';
 
@@ -11,9 +11,6 @@ const Wrapper: React.FC = () => {
 
     const wrapEth = useCallback(async () => {
         try {
-            console.log("Trying to wrap: ");
-            console.log(amountToWrap);
-
             const parsedAmount = ethers.utils.parseEther(amountToWrap)
             await sdk.txs.send({
                 txs: [{
@@ -25,7 +22,7 @@ const Wrapper: React.FC = () => {
         } catch (e) {
             console.error(e)
         }
-    }, [sdk])
+    }, [sdk, amountToWrap])
 
     return (
         <TextField
