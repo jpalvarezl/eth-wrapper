@@ -6,6 +6,7 @@ import { useSafeAppsSDK } from '@gnosis.pm/safe-apps-react-sdk';
 import EthBalance from './components/EthBalance';
 import WethBalance from './components/WethBalance';
 import Wrapper from './components/Wrapper';
+import { Grid } from '@material-ui/core';
 
 const Container = styled.form`
   margin-bottom: 2rem;
@@ -22,11 +23,17 @@ const App: React.FC = () => {
   const { sdk, safe } = useSafeAppsSDK();
 
   return (
-    <Container>
-      <EthBalance />
-      <WethBalance />
-      <Wrapper />
-    </Container>
+    <Grid
+      container
+      spacing={5}>
+      <Grid container direction="column" alignContent="center">
+        <EthBalance />
+        <WethBalance />
+      </Grid>
+      <Grid container item>
+        <Wrapper />
+      </Grid>
+    </Grid>
   );
 };
 
