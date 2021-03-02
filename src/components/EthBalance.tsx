@@ -3,7 +3,7 @@ import { Title } from '@gnosis.pm/safe-react-components';
 import { ethers } from 'ethers';
 import { useSafeAppsSDK } from '@gnosis.pm/safe-apps-react-sdk';
 
-const Balance: React.FC = () => {
+const EthBalance: React.FC = () => {
     const [balance, setBalance] = useState("loading state");
     const { sdk, safe } = useSafeAppsSDK();
 
@@ -20,5 +20,5 @@ const Balance: React.FC = () => {
     return <Title size="md" >{balance}</Title>
 }
 
-export default Balance;
+export default EthBalance;
 
