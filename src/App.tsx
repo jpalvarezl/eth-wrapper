@@ -1,8 +1,5 @@
-import React, { useCallback, useState, useEffect } from 'react';
-import { BigNumber, ethers } from 'ethers';
+import React from 'react';
 import styled from 'styled-components';
-import { Button, Loader, Title } from '@gnosis.pm/safe-react-components';
-import { useSafeAppsSDK } from '@gnosis.pm/safe-apps-react-sdk';
 import EthBalance from './components/EthBalance';
 import WethBalance from './components/WethBalance';
 import Wrapper from './components/Wrapper';
@@ -20,7 +17,6 @@ const Container = styled.form`
 `;
 
 const App: React.FC = () => {
-  const { sdk, safe } = useSafeAppsSDK();
 
   return (
     <Grid
