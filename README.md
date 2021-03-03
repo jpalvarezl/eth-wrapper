@@ -6,4 +6,4 @@ Add the Safe app at your own risk. This is hosted: [https://jpalvarezl.github.io
 
 ## Caveats
 
-No loading state, no error handling
+no error handling, No loading state, UI is ugly (issues will be handled in that order of prio)
