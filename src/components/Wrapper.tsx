@@ -3,13 +3,19 @@ import { useSafeAppsSDK } from '@gnosis.pm/safe-apps-react-sdk';
 import { TextField } from '@material-ui/core';
 import { Button, } from '@gnosis.pm/safe-react-components';
 import { WETH_ADDRESS } from '../utils/Erc20Constants';
-import { ethers } from 'ethers';
+import { BigNumber, ethers } from 'ethers';
 
 const Wrapper: React.FC = () => {
     const { sdk, safe } = useSafeAppsSDK();
     const [amountToWrap, setAmountToWrap] = useState("");
+    const [errorMessage, setErrorMessage] = useState("");
+    const [isError, setIsError] = useState(false);
 
+    const ethBalance = 10;
     const wrapEth = useCallback(async () => {
+        if (isError) {
+            return;
+        }
         try {
             const parsedAmount = ethers.utils.parseEther(amountToWrap)
             await sdk.txs.send({
@@ -22,13 +28,31 @@ const Wrapper: React.FC = () => {
         } catch (e) {
             console.error(e)
         }
-    }, [sdk, amountToWrap])
+    }, [sdk, amountToWrap, isError])
+
+    const validateAmout = useCallback((newValue: string) => {
+        if (isNaN(Number(newValue))) {
+            setIsError(true);
+            setErrorMessage("Not a number");
+        }
+        else if (Number.parseInt(newValue) > ethBalance) {
+            setIsError(true);
+            setErrorMessage("Not enough Ether");
+        }
+        else {
+            setIsError(false);
+            setErrorMessage("");
+            setAmountToWrap(newValue);
+        }
+    }, [])
 
     return (
         <TextField
             value={amountToWrap}
             label="How much ETH you want wrap?"
-            onChange={e => setAmountToWrap(e.target.value)}
+            error={isError}
+            helperText={errorMessage}
+            onChange={e => validateAmout(e.target.value)}
             InputProps={{
                 endAdornment: <Button
                     size="md"
