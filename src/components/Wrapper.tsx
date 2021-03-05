@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useSafeAppsSDK } from '@gnosis.pm/safe-apps-react-sdk';
 import { TextField } from '@material-ui/core';
 import { Button, } from '@gnosis.pm/safe-react-components';
@@ -6,14 +6,11 @@ import { WETH_ADDRESS } from '../utils/Erc20Constants';
 import { BigNumber, ethers } from 'ethers';
 import { Props } from '@gnosis.pm/safe-react-components/dist/navigation/Tab';
 
-interface WrapperProps {
-    maxEth: Number
-}
-
-const Wrapper: React.FC<WrapperProps> = ({ maxEth = 10 }: WrapperProps) => {
+const Wrapper: React.FC = () => {
     const { sdk, safe } = useSafeAppsSDK();
     const [amountToWrap, setAmountToWrap] = useState("");
     const [errorMessage, setErrorMessage] = useState("");
+    const [availableEth, setAvailableEth] = useState(0.0);
     const [isError, setIsError] = useState(false);
 
     const wrapEth = useCallback(async () => {
@@ -34,12 +31,22 @@ const Wrapper: React.FC<WrapperProps> = ({ maxEth = 10 }: WrapperProps) => {
         }
     }, [sdk, amountToWrap, isError])
 
+    useEffect(() => {
+        fetchAvailableEth();
+    }, [safe, sdk, setAvailableEth]);
+
+    async function fetchAvailableEth() {
+        const balanceEth = await sdk.eth.getBalance([safe.safeAddress]);
+        const a = ethers.utils.formatEther(balanceEth);
+        setAvailableEth(Number.parseFloat(a));
+    };
+
     const validateAmout = useCallback((newValue: string) => {
         if (isNaN(Number(newValue))) {
             setIsError(true);
             setErrorMessage("Not a number");
         }
-        else if (Number.parseInt(newValue) > maxEth) {
+        else if (Number.parseFloat(newValue) > availableEth) {
             setIsError(true);
             setErrorMessage("Not enough Ether");
         }

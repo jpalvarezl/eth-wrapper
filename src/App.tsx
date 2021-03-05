@@ -1,4 +1,3 @@
-import React from 'react';
 import styled from 'styled-components';
 import EthBalance from './components/EthBalance';
 import WethBalance from './components/WethBalance';
@@ -27,7 +26,7 @@ const App: React.FC = () => {
         <WethBalance />
       </Grid>
       <Grid container item>
-        <Wrapper maxEth={10} />
+        <Wrapper />
       </Grid>
     </Grid>
   );
