@@ -3,8 +3,7 @@ import { useSafeAppsSDK } from '@gnosis.pm/safe-apps-react-sdk';
 import { TextField } from '@material-ui/core';
 import { Button, } from '@gnosis.pm/safe-react-components';
 import { WETH_ADDRESS } from '../utils/Erc20Constants';
-import { BigNumber, ethers } from 'ethers';
-import { Props } from '@gnosis.pm/safe-react-components/dist/navigation/Tab';
+import { ethers } from 'ethers';
 
 const Wrapper: React.FC = () => {
     const { sdk, safe } = useSafeAppsSDK();
@@ -33,7 +32,7 @@ const Wrapper: React.FC = () => {
 
     useEffect(() => {
         fetchAvailableEth();
-    }, [safe, sdk, setAvailableEth]);
+    }, [safe, sdk]);
 
     async function fetchAvailableEth() {
         const balanceEth = await sdk.eth.getBalance([safe.safeAddress]);
@@ -42,6 +41,7 @@ const Wrapper: React.FC = () => {
     };
 
     const validateAmout = useCallback((newValue: string) => {
+        console.log(newValue);
         if (isNaN(Number(newValue))) {
             setIsError(true);
             setErrorMessage("Not a number");
@@ -55,7 +55,7 @@ const Wrapper: React.FC = () => {
             setErrorMessage("");
             setAmountToWrap(newValue);
         }
-    }, [])
+    }, [availableEth])
 
     return (
         <TextField
