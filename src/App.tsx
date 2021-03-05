@@ -27,7 +27,7 @@ const App: React.FC = () => {
         <WethBalance />
       </Grid>
       <Grid container item>
-        <Wrapper />
+        <Wrapper maxEth={10} />
       </Grid>
     </Grid>
   );

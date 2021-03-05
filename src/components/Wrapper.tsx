@@ -4,14 +4,18 @@ import { TextField } from '@material-ui/core';
 import { Button, } from '@gnosis.pm/safe-react-components';
 import { WETH_ADDRESS } from '../utils/Erc20Constants';
 import { BigNumber, ethers } from 'ethers';
+import { Props } from '@gnosis.pm/safe-react-components/dist/navigation/Tab';
 
-const Wrapper: React.FC = () => {
+interface WrapperProps {
+    maxEth: Number
+}
+
+const Wrapper: React.FC<WrapperProps> = ({ maxEth = 10 }: WrapperProps) => {
     const { sdk, safe } = useSafeAppsSDK();
     const [amountToWrap, setAmountToWrap] = useState("");
     const [errorMessage, setErrorMessage] = useState("");
     const [isError, setIsError] = useState(false);
 
-    const ethBalance = 10;
     const wrapEth = useCallback(async () => {
         if (isError) {
             return;
@@ -35,7 +39,7 @@ const Wrapper: React.FC = () => {
             setIsError(true);
             setErrorMessage("Not a number");
         }
-        else if (Number.parseInt(newValue) > ethBalance) {
+        else if (Number.parseInt(newValue) > maxEth) {
             setIsError(true);
             setErrorMessage("Not enough Ether");
         }
