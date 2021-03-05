@@ -8,7 +8,7 @@ export enum TxStatus {
 
 const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms))
 
-export function txHook(sdk: SafeAppsSDK, safeTxHash: string) {
+export function TxHook(sdk: SafeAppsSDK, safeTxHash: string) {
     const [isExecuting, setIsExecuting] = useState<TxStatus | null>(null)
 
     useEffect(() => {
