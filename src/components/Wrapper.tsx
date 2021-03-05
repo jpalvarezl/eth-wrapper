@@ -4,6 +4,7 @@ import { TextField } from '@material-ui/core';
 import { Button, } from '@gnosis.pm/safe-react-components';
 import { WETH_ADDRESS } from '../utils/Erc20Constants';
 import { ethers } from 'ethers';
+import { TxStatus } from '../hooks/TxHook';
 
 const Wrapper: React.FC = () => {
     const { sdk, safe } = useSafeAppsSDK();
@@ -11,6 +12,7 @@ const Wrapper: React.FC = () => {
     const [errorMessage, setErrorMessage] = useState("");
     const [availableEth, setAvailableEth] = useState(0.0);
     const [isError, setIsError] = useState(false);
+    const [wrappingState, setWrappingState] = useState<TxStatus | null>(null);
 
     const wrapEth = useCallback(async () => {
         if (isError) {
@@ -18,13 +20,14 @@ const Wrapper: React.FC = () => {
         }
         try {
             const parsedAmount = ethers.utils.parseEther(amountToWrap)
-            await sdk.txs.send({
+            const safeTx = await sdk.txs.send({
                 txs: [{
                     to: WETH_ADDRESS,
                     value: parsedAmount.toString(),
                     data: '0x'
                 }]
             })
+            // safeTx.safeTxHash
         } catch (e) {
             console.error(e)
         }
