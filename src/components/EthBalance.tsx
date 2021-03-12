@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Title } from '@gnosis.pm/safe-react-components';
 import { ethers } from 'ethers';
 import { useSafeAppsSDK } from '@gnosis.pm/safe-apps-react-sdk';
+import { Typography } from '@material-ui/core';
 
 const EthBalance: React.FC = () => {
     const [balance, setBalance] = useState("loading state");
@@ -17,7 +18,7 @@ const EthBalance: React.FC = () => {
         console.log("Updating ETH balance");
     }, []);
 
-    return <Title size="md" >ETH balance: {balance}</Title>
+    return <Typography variant="h5" >ETH balance: {balance}</Typography>
 }
 
 export default EthBalance;

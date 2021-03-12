@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import EthBalance from './components/EthBalance';
 import WethBalance from './components/WethBalance';
 import Wrapper from './components/Wrapper';
-import { Grid } from '@material-ui/core';
+import { CardContent, Card, makeStyles, CardActions } from '@material-ui/core';
 
 const Container = styled.form`
   margin-bottom: 2rem;
@@ -15,20 +15,37 @@ const Container = styled.form`
   grid-row-gap: 1rem;
 `;
 
+const useStyles = makeStyles({
+  root: {
+    minWidth: 275,
+  },
+  bullet: {
+    display: 'inline-block',
+    margin: '0 2px',
+    transform: 'scale(0.8)',
+  },
+  title: {
+    fontSize: 14,
+  },
+  pos: {
+    marginBottom: 12,
+  },
+});
+
+
 const App: React.FC = () => {
+  const classes = useStyles();
 
   return (
-    <Grid
-      container
-      spacing={5}>
-      <Grid container direction="column" alignContent="center">
+    <Card className={classes.root} >
+      <CardContent>
         <EthBalance />
         <WethBalance />
-      </Grid>
-      <Grid container item>
+      </CardContent>
+      <CardActions>
         <Wrapper />
-      </Grid>
-    </Grid>
+      </CardActions>
+    </Card>
   );
 };
 

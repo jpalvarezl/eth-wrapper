@@ -4,6 +4,7 @@ import { SafeAppsSdkProvider } from '@gnosis.pm/safe-apps-ethers-provider';
 import { ethers } from 'ethers';
 import { useSafeAppsSDK } from '@gnosis.pm/safe-apps-react-sdk';
 import { WETH_ADDRESS, Erc20 } from '../utils/Erc20Constants'
+import { Typography } from '@material-ui/core';
 
 const WethBalance: React.FC = () => {
     const [balance, setBalance] = useState("");
@@ -22,7 +23,7 @@ const WethBalance: React.FC = () => {
         console.log("Updating WETH balance");
     }, []);
 
-    return <Title size="md" >WETH Balance: {balance}</Title>
+    return <Typography variant="h5" >WETH Balance: {balance}</Typography>
 }
 
 export default WethBalance;
