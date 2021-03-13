@@ -17,7 +17,8 @@ const Container = styled.form`
 
 const useStyles = makeStyles({
   root: {
-    minWidth: 275,
+    maxWidth: "300px",
+    maxHeight: "200px"
   },
   bullet: {
     display: 'inline-block',

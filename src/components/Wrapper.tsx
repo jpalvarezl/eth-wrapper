@@ -1,7 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { useSafeAppsSDK } from '@gnosis.pm/safe-apps-react-sdk';
-import { Snackbar, TextField } from '@material-ui/core';
-import { Button, CopyToClipboardBtn, } from '@gnosis.pm/safe-react-components';
+import { Button, CardActions, Snackbar, TextField } from '@material-ui/core';
 import { WETH_ADDRESS } from '../utils/Erc20Constants';
 import { ethers } from 'ethers';
 import { TxHook, TxStatus } from '../hooks/TxHook';
@@ -79,20 +78,18 @@ const Wrapper: React.FC = () => {
                 message={"Tap to copy your safeTxHash: " + submittedSafeTxHash} />
             <TextField
                 value={amountToWrap}
-                label="How much ETH you want wrap?"
+                label="ETH amount"
                 error={isError}
                 helperText={errorMessage}
-                onChange={e => validateAmout(e.target.value)}
-                InputProps={{
-                    endAdornment: <Button
-                        size="md"
-                        variant="contained"
-                        color="primary"
-                        onClick={() => wrapEth()}>
-                        Wrap
+                onChange={e => validateAmout(e.target.value)} />
+
+            <CardActions>
+                <Button
+                    size="small"
+                    onClick={() => wrapEth()}>
+                    Wrap ETH
             </Button>
-                }}
-            />
+            </CardActions>
         </div>);
 }
 
