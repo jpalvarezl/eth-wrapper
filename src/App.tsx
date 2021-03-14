@@ -3,6 +3,8 @@ import EthBalance from './components/EthBalance';
 import WethBalance from './components/WethBalance';
 import Wrapper from './components/Wrapper';
 import { CardContent, Card, makeStyles, CardActions } from '@material-ui/core';
+import { Title } from '@gnosis.pm/safe-react-components';
+import React, { useState } from 'react';
 
 const Container = styled.form`
   margin-bottom: 2rem;
@@ -18,19 +20,22 @@ const Container = styled.form`
 const useStyles = makeStyles({
   root: {
     maxWidth: "300px",
-    maxHeight: "200px"
+    maxHeight: "300px"
   },
 });
 
 
 const App: React.FC = () => {
   const classes = useStyles();
+  const [wrap, setWrap] = useState(true);
 
   return (
-    <Card className={classes.root} >
+    <Card className={classes.root} onClick={() => setWrap(!wrap)} >
       <CardContent>
-        <EthBalance />
-        <WethBalance />
+        <Title size="lg">{wrap ? "WRAP" : "UNWRAP"}</Title>
+        {wrap ?
+          <EthBalance />
+          : <WethBalance />}
       </CardContent>
       <CardActions>
         <Wrapper />

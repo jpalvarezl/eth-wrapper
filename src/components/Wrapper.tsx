@@ -13,7 +13,6 @@ const Wrapper: React.FC = () => {
     const [isError, setIsError] = useState(false);
     const [wrappingState, setWrappingState] = useState<TxStatus | null>(null);
     const [submittedSafeTxHash, setSumittedSafeTxHash] = useState<string | null>(null);
-    const [copiedValue, setCopiedValue] = useState("");
 
     const wrapEth = useCallback(async () => {
         if (isError) {
@@ -64,18 +63,12 @@ const Wrapper: React.FC = () => {
         }
     }, [availableEth])
 
-    const copySafeTxHash = useCallback((value: string) => {
-        document.execCommand("copy", false, value);
-        setCopiedValue(value);
-    }, [submittedSafeTxHash]);
-
     return (
         <div>
             <Snackbar
                 open={wrappingState == TxStatus.Executing}
                 autoHideDuration={6000}
-                action={() => copySafeTxHash(submittedSafeTxHash!)}
-                message={"Tap to copy your safeTxHash: " + submittedSafeTxHash} />
+                message={"Submitted SafeTxHash: " + submittedSafeTxHash} />
             <TextField
                 value={amountToWrap}
                 label="ETH amount"
@@ -86,6 +79,7 @@ const Wrapper: React.FC = () => {
             <CardActions>
                 <Button
                     size="small"
+                    color="primary"
                     onClick={() => wrapEth()}>
                     Wrap ETH
             </Button>
