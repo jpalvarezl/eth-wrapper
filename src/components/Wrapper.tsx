@@ -4,7 +4,7 @@ import { Button, CardActions, Snackbar, TextField } from '@material-ui/core';
 import { WETH_ADDRESS } from '../utils/Erc20Constants';
 import { ethers } from 'ethers';
 import { SafeAppsSdkProvider } from '@gnosis.pm/safe-apps-ethers-provider';
-import { WETH_ABI } from '../utils/WETHConstants';
+import { WETHwithdraw_function } from '../utils/WETHConstants';
 
 interface WrapperProps {
     wrap: boolean
@@ -12,7 +12,7 @@ interface WrapperProps {
 
 const Wrapper: React.FC<WrapperProps> = (props: WrapperProps) => {
     const { sdk, safe } = useSafeAppsSDK();
-    const weth = useMemo(() => new ethers.Contract(WETH_ADDRESS, WETH_ABI, new SafeAppsSdkProvider(safe, sdk)), [sdk, safe]);
+    // const weth = useMemo(() => new ethers.Contract(WETH_ADDRESS, WETH_ABI, new SafeAppsSdkProvider(safe, sdk)), [sdk, safe]);
 
     const [amountToWrap, setAmountToWrap] = useState("");
     const [errorMessage, setErrorMessage] = useState("");
@@ -41,7 +41,15 @@ const Wrapper: React.FC<WrapperProps> = (props: WrapperProps) => {
         } else {
             try {
                 const parsedAmount = ethers.utils.parseEther(amountToWrap);
-                await weth.withdraw(parsedAmount);
+                const withdraw = new ethers.utils.Interface(WETHwithdraw_function);
+                const safeTx = await sdk.txs.send({
+                    txs: [{
+                        to: WETH_ADDRESS,
+                        value: '0',
+                        data: withdraw.encodeFunctionData("withdraw", [parsedAmount])
+                    }]
+                })
+                console.log(safeTx.safeTxHash);
             } catch (e) {
                 console.error(e);
             }

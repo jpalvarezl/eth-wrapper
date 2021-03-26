@@ -1,4 +1,4 @@
-export const WETHwithdraw = ["function withdraw(uint wad) public"];
+export const WETHwithdraw_function = ["function withdraw(uint wad) public"];
 export const WETH_ABI = `
 [
 	{
