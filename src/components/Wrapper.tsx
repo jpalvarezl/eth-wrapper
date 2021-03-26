@@ -58,7 +58,7 @@ const Wrapper: React.FC<WrapperProps> = (props: WrapperProps) => {
         }
         else if (Number.parseFloat(newValue) > availableEth) {
             setIsError(true);
-            setErrorMessage("Not enough Ether");
+            setErrorMessage("Insufficient funds");
         }
         else {
             setIsError(false);
@@ -75,7 +75,7 @@ const Wrapper: React.FC<WrapperProps> = (props: WrapperProps) => {
                 message={"Submitted SafeTxHash: " + submittedSafeTxHash} />
             <TextField
                 value={amountToWrap}
-                label="ETH amount"
+                label={props.wrap ? "ETH amount" : "WETH amount"}
                 error={isError}
                 helperText={errorMessage}
                 onChange={e => validateAmout(e.target.value)} />
