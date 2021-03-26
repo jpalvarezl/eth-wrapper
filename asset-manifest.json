@@ -1,19 +1,21 @@
 {
   "files": {
-    "main.js": "./static/js/main.92a36404.chunk.js",
-    "main.js.map": "./static/js/main.92a36404.chunk.js.map",
+    "main.js": "./static/js/main.0d3cce55.chunk.js",
+    "main.js.map": "./static/js/main.0d3cce55.chunk.js.map",
     "runtime-main.js": "./static/js/runtime-main.99f0eefc.js",
     "runtime-main.js.map": "./static/js/runtime-main.99f0eefc.js.map",
-    "static/js/2.cfb02dd0.chunk.js": "./static/js/2.cfb02dd0.chunk.js",
-    "static/js/2.cfb02dd0.chunk.js.map": "./static/js/2.cfb02dd0.chunk.js.map",
+    "static/js/2.ab46e1eb.chunk.js": "./static/js/2.ab46e1eb.chunk.js",
+    "static/js/2.ab46e1eb.chunk.js.map": "./static/js/2.ab46e1eb.chunk.js.map",
     "index.html": "./index.html",
-    "static/js/2.cfb02dd0.chunk.js.LICENSE.txt": "./static/js/2.cfb02dd0.chunk.js.LICENSE.txt",
+    "static/js/2.ab46e1eb.chunk.js.LICENSE.txt": "./static/js/2.ab46e1eb.chunk.js.LICENSE.txt",
     "static/media/averta-bold.woff2": "./static/media/averta-bold.8fdcd8d4.woff2",
-    "static/media/averta-normal.woff2": "./static/media/averta-normal.39d04879.woff2"
+    "static/media/averta-normal.woff2": "./static/media/averta-normal.39d04879.woff2",
+    "static/media/eth.91d85d75.svg": "./static/media/eth.91d85d75.svg",
+    "static/media/weth.b610526e.svg": "./static/media/weth.b610526e.svg"
   },
   "entrypoints": [
     "static/js/runtime-main.99f0eefc.js",
-    "static/js/2.cfb02dd0.chunk.js",
-    "static/js/main.92a36404.chunk.js"
+    "static/js/2.ab46e1eb.chunk.js",
+    "static/js/main.0d3cce55.chunk.js"
   ]
 }
