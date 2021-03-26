@@ -2,7 +2,7 @@ import React, { useEffect, useState, useMemo, useCallback } from 'react';
 import { SafeAppsSdkProvider } from '@gnosis.pm/safe-apps-ethers-provider';
 import { ethers } from 'ethers';
 import { useSafeAppsSDK } from '@gnosis.pm/safe-apps-react-sdk';
-import { WETH_ADDRESS, Erc20 } from '../utils/Erc20Constants'
+import { Erc20, getWethAddress } from '../utils/Erc20Constants'
 import { Typography } from '@material-ui/core';
 
 const WethBalance: React.FC = () => {
@@ -10,7 +10,7 @@ const WethBalance: React.FC = () => {
 
     const { sdk, safe } = useSafeAppsSDK();
     const provider = useMemo(() => new SafeAppsSdkProvider(safe, sdk), [safe, sdk]);
-    const weth = useMemo(() => new ethers.Contract(WETH_ADDRESS, Erc20, provider), [provider]);
+    const weth = useMemo(() => new ethers.Contract(getWethAddress(safe.network.toLowerCase()), Erc20, provider), [provider]);
 
     async function fetchBalance() {
         const balanceWeth = await weth.balanceOf(safe.safeAddress);

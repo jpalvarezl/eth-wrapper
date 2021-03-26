@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState, useMemo } from 'react';
 import { useSafeAppsSDK } from '@gnosis.pm/safe-apps-react-sdk';
 import { Button, CardActions, Snackbar, TextField } from '@material-ui/core';
-import { WETH_ADDRESS } from '../utils/Erc20Constants';
+import { getWethAddress } from '../utils/Erc20Constants';
 import { ethers } from 'ethers';
 import { WETHwithdraw_function } from '../utils/WETHConstants';
 
@@ -29,7 +29,7 @@ const Wrapper: React.FC<WrapperProps> = (props: WrapperProps) => {
                 const parsedAmount = ethers.utils.parseEther(amountToWrap)
                 const safeTx = await sdk.txs.send({
                     txs: [{
-                        to: WETH_ADDRESS,
+                        to: getWethAddress(safe.network.toLowerCase()),
                         value: parsedAmount.toString(),
                         data: '0x'
                     }]
@@ -45,7 +45,7 @@ const Wrapper: React.FC<WrapperProps> = (props: WrapperProps) => {
                 const withdraw = new ethers.utils.Interface(WETHwithdraw_function);
                 const safeTx = await sdk.txs.send({
                     txs: [{
-                        to: WETH_ADDRESS,
+                        to: getWethAddress(safe.network.toLowerCase()),
                         value: '0',
                         data: withdraw.encodeFunctionData("withdraw", [parsedAmount])
                     }]
