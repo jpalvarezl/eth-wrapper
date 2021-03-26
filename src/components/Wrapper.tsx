@@ -1,9 +1,10 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState, useMemo } from 'react';
 import { useSafeAppsSDK } from '@gnosis.pm/safe-apps-react-sdk';
 import { Button, CardActions, Snackbar, TextField } from '@material-ui/core';
 import { WETH_ADDRESS } from '../utils/Erc20Constants';
 import { ethers } from 'ethers';
-import { TxHook, TxStatus } from '../hooks/TxHook';
+import { SafeAppsSdkProvider } from '@gnosis.pm/safe-apps-ethers-provider';
+import { WETHwithdraw } from '../utils/WETHConstants';
 
 interface WrapperProps {
     wrap: boolean
@@ -15,30 +16,35 @@ const Wrapper: React.FC<WrapperProps> = (props: WrapperProps) => {
     const [errorMessage, setErrorMessage] = useState("");
     const [availableEth, setAvailableEth] = useState(0.0);
     const [isError, setIsError] = useState(false);
-    const [wrappingState, setWrappingState] = useState<TxStatus | null>(null);
-    const [submittedSafeTxHash, setSumittedSafeTxHash] = useState<string | null>(null);
+
+    const provider = useMemo(() => new SafeAppsSdkProvider(safe, sdk), [safe, sdk]);
+    const weth = useMemo(() => new ethers.Contract(WETH_ADDRESS, WETHwithdraw, provider), [provider]);
 
     const wrapEth = useCallback(async () => {
         if (isError) {
             return;
         }
-        try {
-            const parsedAmount = ethers.utils.parseEther(amountToWrap)
-            const safeTx = await sdk.txs.send({
-                txs: [{
-                    to: WETH_ADDRESS,
-                    value: parsedAmount.toString(),
-                    data: '0x'
-                }]
-            })
-            // setWrappingState(TxHook(sdk, safeTx.safeTxHash));
-            setSumittedSafeTxHash(safeTx.safeTxHash);
-            setWrappingState(TxStatus.Executing);
 
-        } catch (e) {
-            console.error(e)
+        if (props.wrap) {
+            try {
+                const parsedAmount = ethers.utils.parseEther(amountToWrap)
+                const safeTx = await sdk.txs.send({
+                    txs: [{
+                        to: WETH_ADDRESS,
+                        value: parsedAmount.toString(),
+                        data: '0x'
+                    }]
+                })
+                console.log(safeTx.safeTxHash);
+            } catch (e) {
+                console.error(e)
+            }
+        } else {
+            const parsedAmount = ethers.utils.parseEther(amountToWrap)
+            await weth.withdraw(parsedAmount);
+            console.log("UNWRAP")
         }
-    }, [sdk, amountToWrap, isError])
+    }, [sdk, amountToWrap, isError, props.wrap])
 
     useEffect(() => {
         fetchAvailableEth();
@@ -69,10 +75,6 @@ const Wrapper: React.FC<WrapperProps> = (props: WrapperProps) => {
 
     return (
         <div>
-            <Snackbar
-                open={wrappingState == TxStatus.Executing}
-                autoHideDuration={6000}
-                message={"Submitted SafeTxHash: " + submittedSafeTxHash} />
             <TextField
                 value={amountToWrap}
                 label={props.wrap ? "ETH amount" : "WETH amount"}

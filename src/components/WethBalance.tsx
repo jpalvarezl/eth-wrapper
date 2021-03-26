@@ -1,5 +1,4 @@
 import React, { useEffect, useState, useMemo, useCallback } from 'react';
-import { Title } from '@gnosis.pm/safe-react-components';
 import { SafeAppsSdkProvider } from '@gnosis.pm/safe-apps-ethers-provider';
 import { ethers } from 'ethers';
 import { useSafeAppsSDK } from '@gnosis.pm/safe-apps-react-sdk';
