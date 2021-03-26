@@ -3,7 +3,6 @@ import { useSafeAppsSDK } from '@gnosis.pm/safe-apps-react-sdk';
 import { Button, CardActions, Snackbar, TextField } from '@material-ui/core';
 import { WETH_ADDRESS } from '../utils/Erc20Constants';
 import { ethers } from 'ethers';
-import { SafeAppsSdkProvider } from '@gnosis.pm/safe-apps-ethers-provider';
 import { WETHwithdraw_function } from '../utils/WETHConstants';
 
 interface WrapperProps {
@@ -18,6 +17,7 @@ const Wrapper: React.FC<WrapperProps> = (props: WrapperProps) => {
     const [errorMessage, setErrorMessage] = useState("");
     const [availableEth, setAvailableEth] = useState(0.0);
     const [isError, setIsError] = useState(false);
+    const [safeTxHash, setSafeTxHash] = useState("");
 
     const wrapEth = useCallback(async () => {
         if (isError) {
@@ -34,6 +34,7 @@ const Wrapper: React.FC<WrapperProps> = (props: WrapperProps) => {
                         data: '0x'
                     }]
                 })
+                setSafeTxHash(safeTx.safeTxHash);
                 console.log(safeTx.safeTxHash);
             } catch (e) {
                 console.error(e)
@@ -49,6 +50,7 @@ const Wrapper: React.FC<WrapperProps> = (props: WrapperProps) => {
                         data: withdraw.encodeFunctionData("withdraw", [parsedAmount])
                     }]
                 })
+                setSafeTxHash(safeTx.safeTxHash);
                 console.log(safeTx.safeTxHash);
             } catch (e) {
                 console.error(e);
@@ -85,6 +87,12 @@ const Wrapper: React.FC<WrapperProps> = (props: WrapperProps) => {
 
     return (
         <div>
+            <Snackbar
+                open={safeTxHash.length != 0}
+                autoHideDuration={3000}
+                onClose={() => setSafeTxHash("")}
+                message="You transaction has been submitted"
+            />
             <TextField
                 value={amountToWrap}
                 label={props.wrap ? "ETH amount" : "WETH amount"}
