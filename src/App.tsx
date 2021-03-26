@@ -38,7 +38,7 @@ const App: React.FC = () => {
           : <WethBalance />}
       </CardContent>
       <CardActions>
-        <Wrapper />
+        <Wrapper wrap={wrap} />
       </CardActions>
     </Card>
   );

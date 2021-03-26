@@ -5,7 +5,11 @@ import { WETH_ADDRESS } from '../utils/Erc20Constants';
 import { ethers } from 'ethers';
 import { TxHook, TxStatus } from '../hooks/TxHook';
 
-const Wrapper: React.FC = () => {
+interface WrapperProps {
+    wrap: boolean
+}
+
+const Wrapper: React.FC<WrapperProps> = (props: WrapperProps) => {
     const { sdk, safe } = useSafeAppsSDK();
     const [amountToWrap, setAmountToWrap] = useState("");
     const [errorMessage, setErrorMessage] = useState("");
@@ -81,8 +85,8 @@ const Wrapper: React.FC = () => {
                     size="small"
                     color="primary"
                     onClick={() => wrapEth()}>
-                    Wrap ETH
-            </Button>
+                    {props.wrap ? "Wrap" : "Unwrap"}
+                </Button>
             </CardActions>
         </div>);
 }
