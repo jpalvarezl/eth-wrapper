@@ -2,10 +2,12 @@ import styled from 'styled-components';
 import EthBalance from './components/EthBalance';
 import WethBalance from './components/WethBalance';
 import Wrapper from './components/Wrapper';
-import { CardContent, Card, makeStyles, CardActions, CardHeader, IconButton, Avatar } from '@material-ui/core';
+import { CardContent, makeStyles, CardActions, CardHeader, IconButton, Avatar, } from '@material-ui/core';
+import { Button, Card } from '@gnosis.pm/safe-react-components';
 import { ReactComponent as EthLogo } from './assets/svg/eth.svg';
 import { ReactComponent as WethLogo } from './assets/svg/weth.svg';
 import React, { useState } from 'react';
+import { isTemplateMiddleOrTemplateTail } from 'typescript';
 
 const Container = styled.form`
   margin-bottom: 2rem;
@@ -18,15 +20,19 @@ const Container = styled.form`
   grid-row-gap: 1rem;
 `;
 
+
 const useStyles = makeStyles({
   root: {
     maxWidth: "300px",
-    maxHeight: "300px"
+    maxHeight: "300px",
+    alignItems: 'center',
+    margin: "auto",
+    padding: "24px",
   },
   logo: {
     width: "32px",
     height: "32px",
-  }
+  },
 });
 
 
@@ -34,8 +40,10 @@ const App: React.FC = () => {
   const classes = useStyles();
   const [wrap, setWrap] = useState(true);
 
+  
+
   return (
-    <Card className={classes.root}  >
+    <Card className={classes.root} >
       <CardHeader
         avatar={
 

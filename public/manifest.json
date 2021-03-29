@@ -2,7 +2,7 @@
   "short_name": "ETH Wrapper",
   "name": "ETH Wrapper",
   "description": "Simple safe app to wrap ETH",
-  "iconPath": "logo.svg",
+  "iconPath": "WETH.png",
   "icons": [
     {
       "src": "favicon.ico",

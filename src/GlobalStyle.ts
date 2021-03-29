@@ -9,9 +9,17 @@ const GlobalStyle = createGlobalStyle`
 
     body {
        height: 100%;
-       margin: 0px;
+       margin: auto;
        padding: 0px;
+       background-color: #F7F5F5;
     }
+    
+    .center {
+        margin: auto;
+        width: 50%;
+        border: 3px solid green;
+        padding: 10px;
+      }
 
     #root {
         height: 100%;
