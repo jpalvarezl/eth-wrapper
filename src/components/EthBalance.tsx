@@ -4,7 +4,7 @@ import { useSafeAppsSDK } from '@gnosis.pm/safe-apps-react-sdk';
 import { Typography } from '@material-ui/core';
 
 const EthBalance: React.FC = () => {
-    const [balance, setBalance] = useState("loading state");
+    const [balance, setBalance] = useState("loading...");
     const { sdk, safe } = useSafeAppsSDK();
 
     async function fetchBalance() {
@@ -17,7 +17,7 @@ const EthBalance: React.FC = () => {
         console.log("Updating ETH balance");
     }, []);
 
-    return <Typography variant="body2" component="p" >ETH balance: {balance}</Typography>
+    return <Typography variant="body2" component="p" >Your ETH balance: {balance}</Typography>
 }
 
 export default EthBalance;

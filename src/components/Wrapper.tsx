@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState, useMemo } from 'react';
 import { useSafeAppsSDK } from '@gnosis.pm/safe-apps-react-sdk';
 import { CardActions, Snackbar, TextField } from '@material-ui/core';
-import { Button } from '@gnosis.pm/safe-react-components';
+import { Button, Title } from '@gnosis.pm/safe-react-components';
 import { getWethAddress } from '../utils/Erc20Constants';
 import { ethers } from 'ethers';
 import { WETHwithdraw_function } from '../utils/WETHConstants';
@@ -23,7 +23,7 @@ const Wrapper: React.FC<WrapperProps> = (props: WrapperProps) => {
     const wrapEth = useCallback(async () => {
         if (isError) {
             return;
-        }
+        } 
 
         if (props.wrap) {
             try {

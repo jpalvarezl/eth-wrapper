@@ -22,7 +22,7 @@ const WethBalance: React.FC = () => {
         console.log("Updating WETH balance");
     }, []);
 
-    return <Typography variant="body2" component="p" >WETH Balance: {balance}</Typography>
+    return <Typography variant="body2" component="p" >Your WETH Balance: {balance}</Typography>
 }
 
 export default WethBalance;
