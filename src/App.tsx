@@ -4,8 +4,6 @@ import WethBalance from './components/WethBalance';
 import Wrapper from './components/Wrapper';
 import { CardContent, makeStyles, CardActions, CardHeader } from '@material-ui/core';
 import { Button, Card, Text, Title } from '@gnosis.pm/safe-react-components';
-import { ReactComponent as EthLogo } from './assets/svg/eth.svg';
-import { ReactComponent as WethLogo } from './assets/svg/weth.svg';
 import React, { useState } from 'react';
 
 const useStyles = makeStyles({
@@ -34,8 +32,8 @@ const App: React.FC = () => {
         avatar={
 
           wrap ?
-          <StyledTitle size="sm">Wrap Ether</StyledTitle>:
-          <StyledTitle size="sm">Unwrap Ether</StyledTitle>
+          <StyledTitle size="sm">Wrap ETH</StyledTitle>:
+          <StyledTitle size="sm">Unwrap WETH</StyledTitle>
         }
       />
       <Button size="md" color="primary" variant="outlined" onClick={() => setWrap(!wrap)}>⇄ Switch</Button>
