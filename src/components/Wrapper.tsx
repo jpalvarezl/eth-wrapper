@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState, useMemo } from 'react';
 import { useSafeAppsSDK } from '@gnosis.pm/safe-apps-react-sdk';
-import { CardActions, Snackbar, TextField } from '@material-ui/core';
-import { Button, Title } from '@gnosis.pm/safe-react-components';
+import { CardActions, Snackbar } from '@material-ui/core';
+import { Button, TextField } from '@gnosis.pm/safe-react-components';
 import { getWethAddress } from '../utils/Erc20Constants';
 import { ethers } from 'ethers';
 import { WETHwithdraw_function } from '../utils/WETHConstants';
@@ -12,7 +12,6 @@ interface WrapperProps {
 
 const Wrapper: React.FC<WrapperProps> = (props: WrapperProps) => {
     const { sdk, safe } = useSafeAppsSDK();
-    // const weth = useMemo(() => new ethers.Contract(WETH_ADDRESS, WETH_ABI, new SafeAppsSdkProvider(safe, sdk)), [sdk, safe]);
 
     const [amountToWrap, setAmountToWrap] = useState("");
     const [errorMessage, setErrorMessage] = useState("");
@@ -23,7 +22,7 @@ const Wrapper: React.FC<WrapperProps> = (props: WrapperProps) => {
     const wrapEth = useCallback(async () => {
         if (isError) {
             return;
-        } 
+        }
 
         if (props.wrap) {
             try {
@@ -97,8 +96,7 @@ const Wrapper: React.FC<WrapperProps> = (props: WrapperProps) => {
             <TextField
                 value={amountToWrap}
                 label={props.wrap ? "ETH amount" : "WETH amount"}
-                error={isError}
-                helperText={errorMessage}
+                meta={{ error: errorMessage }}
                 onChange={e => validateAmout(e.target.value)} />
 
             <CardActions>
