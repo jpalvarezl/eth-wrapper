@@ -1,11 +1,13 @@
 import React, { useCallback, useEffect, useState, useMemo } from 'react';
 import { useSafeAppsSDK } from '@gnosis.pm/safe-apps-react-sdk';
+import { SafeAppsSdkProvider } from '@gnosis.pm/safe-apps-ethers-provider';
 import { Snackbar } from '@material-ui/core';
 import Grid from '@material-ui/core/Grid';
 import { Button, TextField } from '@gnosis.pm/safe-react-components';
-import { getWethAddress } from '../utils/Erc20Constants';
+import { getWethAddress, Erc20 } from '../utils/Erc20Constants';
 import { ethers } from 'ethers';
 import { WETHwithdraw_function } from '../utils/WETHConstants';
+import { wrap } from 'node:module';
 
 
 interface WrapperProps {
@@ -17,11 +19,15 @@ const Wrapper: React.FC<WrapperProps> = (props: WrapperProps) => {
 
     const [amountToWrap, setAmountToWrap] = useState("");
     const [errorMessage, setErrorMessage] = useState("");
-    const [availableEth, setAvailableEth] = useState(0.0);
+    const [availableBalance, setAvailableBalance] = useState(0.0);
     const [isError, setIsError] = useState(false);
     const [safeTxHash, setSafeTxHash] = useState("");
 
+    const provider = useMemo(() => new SafeAppsSdkProvider(safe, sdk), [safe, sdk]);
+    const weth = useMemo(() => new ethers.Contract(getWethAddress(safe.network.toLowerCase()), Erc20, provider), [provider]);
+
     const wrapEth = useCallback(async () => {
+        validateAmout(amountToWrap);
         if (isError) {
             return;
         }
@@ -62,12 +68,18 @@ const Wrapper: React.FC<WrapperProps> = (props: WrapperProps) => {
 
     useEffect(() => {
         fetchAvailableEth();
-    }, [safe, sdk]);
+    }, [safe, sdk, props.wrap]);
 
     async function fetchAvailableEth() {
-        const balanceEth = await sdk.eth.getBalance([safe.safeAddress]);
-        const a = ethers.utils.formatEther(balanceEth);
-        setAvailableEth(Number.parseFloat(a));
+        var newValue = "0";
+        if (props.wrap){
+            const balanceEth = await sdk.eth.getBalance([safe.safeAddress]);
+            newValue = ethers.utils.formatEther(balanceEth);
+        } else {
+            const balanceWeth = await weth.balanceOf(safe.safeAddress);
+            newValue = ethers.utils.formatEther(balanceWeth);
+        }
+        setAvailableBalance(Number.parseFloat(newValue));
     };
 
     const validateAmout = useCallback((newValue: string) => {
@@ -76,7 +88,7 @@ const Wrapper: React.FC<WrapperProps> = (props: WrapperProps) => {
             setIsError(true);
             setErrorMessage("Not a number");
         }
-        else if (Number.parseFloat(newValue) > availableEth) {
+        else if (Number.parseFloat(newValue) > availableBalance) {
             setIsError(true);
             setErrorMessage("Insufficient funds");
         }
@@ -85,7 +97,7 @@ const Wrapper: React.FC<WrapperProps> = (props: WrapperProps) => {
             setErrorMessage("");
             setAmountToWrap(newValue);
         }
-    }, [availableEth])
+    }, [availableBalance])
 
     return (
         <Grid container spacing={3}>
