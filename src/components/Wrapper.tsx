@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useState, useMemo } from 'react';
 import { useSafeAppsSDK } from '@gnosis.pm/safe-apps-react-sdk';
-import { Button, CardActions, Snackbar, TextField } from '@material-ui/core';
+import { CardActions, Snackbar, TextField } from '@material-ui/core';
+import { Button, Title } from '@gnosis.pm/safe-react-components';
 import { getWethAddress } from '../utils/Erc20Constants';
 import { ethers } from 'ethers';
 import { WETHwithdraw_function } from '../utils/WETHConstants';
@@ -22,7 +23,7 @@ const Wrapper: React.FC<WrapperProps> = (props: WrapperProps) => {
     const wrapEth = useCallback(async () => {
         if (isError) {
             return;
-        }
+        } 
 
         if (props.wrap) {
             try {
@@ -101,10 +102,7 @@ const Wrapper: React.FC<WrapperProps> = (props: WrapperProps) => {
                 onChange={e => validateAmout(e.target.value)} />
 
             <CardActions>
-                <Button
-                    size="small"
-                    color="primary"
-                    onClick={() => wrapEth()}>
+                <Button size="md" color="primary" variant="contained" onClick={() => wrapEth()}>
                     {props.wrap ? "Wrap" : "Unwrap"}
                 </Button>
             </CardActions>
