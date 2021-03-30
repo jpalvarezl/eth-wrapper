@@ -1,9 +1,9 @@
-import React, { useEffect, useState, useMemo, useCallback } from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
 import { SafeAppsSdkProvider } from '@gnosis.pm/safe-apps-ethers-provider';
 import { ethers } from 'ethers';
 import { useSafeAppsSDK } from '@gnosis.pm/safe-apps-react-sdk';
 import { Erc20, getWethAddress } from '../utils/Erc20Constants'
-import { Typography } from '@material-ui/core';
+import { Text } from '@gnosis.pm/safe-react-components';
 
 const WethBalance: React.FC = () => {
     const [balance, setBalance] = useState("");
@@ -22,7 +22,7 @@ const WethBalance: React.FC = () => {
         console.log("Updating WETH balance");
     }, []);
 
-    return <Typography variant="body2" component="p" >Your WETH Balance: {balance}</Typography>
+    return <Text size="xl" >Your WETH Balance: {balance}</Text>
 }
 
 export default WethBalance;
