@@ -3,7 +3,7 @@ import EthBalance from './components/EthBalance';
 import WethBalance from './components/WethBalance';
 import Wrapper from './components/Wrapper';
 import { CardContent, makeStyles, CardActions, CardHeader } from '@material-ui/core';
-import { Button, Card, Text, Title } from '@gnosis.pm/safe-react-components';
+import { Button, ButtonLink, Card, IconText, Text, Title } from '@gnosis.pm/safe-react-components';
 import React, { useState } from 'react';
 
 const useStyles = makeStyles({
@@ -32,17 +32,19 @@ const App: React.FC = () => {
         avatar={
 
           wrap ?
-          <StyledTitle size="sm">Wrap ETH</StyledTitle>:
-          <StyledTitle size="sm">Unwrap WETH</StyledTitle>
+            <StyledTitle size="sm">Wrap ETH</StyledTitle> :
+            <StyledTitle size="sm">Unwrap WETH</StyledTitle>
         }
       />
-      <Button size="md" color="primary" variant="outlined" onClick={() => setWrap(!wrap)}>⇄ Switch</Button>
+      {/* <div onClick={() => setWrap(!wrap)}> */}
+      <ButtonLink iconType="code" iconSize="md" color="primary" textSize="xl" onClick={() => setWrap(!wrap)} >Switch</ButtonLink>
+      {/* </div> */}
       <CardHeader
         avatar={
 
           wrap ?
-          <Text size="xl" strong>How much ETH do you want to wrap? </Text>:
-          <Text size="xl" strong>How much WETH do you want to unwrap? </Text>
+            <Text size="xl" strong>How much ETH do you want to wrap? </Text> :
+            <Text size="xl" strong>How much WETH do you want to unwrap? </Text>
         }
       />
       <CardContent>
