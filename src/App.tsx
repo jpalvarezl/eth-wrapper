@@ -10,7 +10,6 @@ const useStyles = makeStyles({
   root: {
     alignItems: 'center',
     justifyContent: 'center',
-    padding: '42px'
   },
   logo: {
     width: "32px",

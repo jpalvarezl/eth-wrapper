@@ -102,7 +102,7 @@ const Wrapper: React.FC<WrapperProps> = (props: WrapperProps) => {
                     meta={{ error: errorMessage }}
                     onChange={e => validateAmout(e.target.value)} />
             </Grid>
-            <Grid item xs={2}>
+            <Grid item xs={8}>
                 <Button size="md" color="primary" variant="contained" onClick={() => wrapEth()}>
                     {props.wrap ? "Wrap" : "Unwrap"}
                 </Button>
