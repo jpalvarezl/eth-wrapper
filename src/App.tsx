@@ -10,6 +10,7 @@ const useStyles = makeStyles({
   root: {
     alignItems: 'center',
     justifyContent: 'center',
+    padding: '42px'
   },
   logo: {
     width: "32px",
@@ -27,34 +28,28 @@ const App: React.FC = () => {
 
   return (
     <Card className={classes.root}>
-
       <CardHeader
-        avatar={
-
+        title={
           wrap ?
             <StyledTitle size="sm">Wrap ETH</StyledTitle> :
             <StyledTitle size="sm">Unwrap WETH</StyledTitle>
         }
-      />
-      {/* <div onClick={() => setWrap(!wrap)}> */}
-      <ButtonLink iconType="code" iconSize="md" color="primary" textSize="xl" onClick={() => setWrap(!wrap)} >Switch</ButtonLink>
-      {/* </div> */}
-      <CardHeader
-        avatar={
-
-          wrap ?
-            <Text size="xl" strong>How much ETH do you want to wrap? </Text> :
-            <Text size="xl" strong>How much WETH do you want to unwrap? </Text>
+        action={
+          <ButtonLink iconType="code" iconSize="md" color="primary" textSize="xl" onClick={() => setWrap(!wrap)} >Switch</ButtonLink>
         }
       />
       <CardContent>
         {wrap ?
+          <Text size="xl" strong>How much ETH do you want to wrap? </Text> :
+          <Text size="xl" strong>How much WETH do you want to unwrap? </Text>
+        }
+        <br />
+        {wrap ?
           <EthBalance />
           : <WethBalance />}
-      </CardContent>
-      <CardActions>
+        <br />
         <Wrapper wrap={wrap} />
-      </CardActions>
+      </CardContent>
     </Card >
   );
 };

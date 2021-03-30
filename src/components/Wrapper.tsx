@@ -1,10 +1,12 @@
 import React, { useCallback, useEffect, useState, useMemo } from 'react';
 import { useSafeAppsSDK } from '@gnosis.pm/safe-apps-react-sdk';
-import { CardActions, Snackbar } from '@material-ui/core';
+import { Snackbar } from '@material-ui/core';
+import Grid from '@material-ui/core/Grid';
 import { Button, TextField } from '@gnosis.pm/safe-react-components';
 import { getWethAddress } from '../utils/Erc20Constants';
 import { ethers } from 'ethers';
 import { WETHwithdraw_function } from '../utils/WETHConstants';
+
 
 interface WrapperProps {
     wrap: boolean
@@ -86,25 +88,26 @@ const Wrapper: React.FC<WrapperProps> = (props: WrapperProps) => {
     }, [availableEth])
 
     return (
-        <div>
+        <Grid container spacing={3}>
             <Snackbar
                 open={safeTxHash.length != 0}
                 autoHideDuration={3000}
                 onClose={() => setSafeTxHash("")}
                 message="You transaction has been submitted"
             />
-            <TextField
-                value={amountToWrap}
-                label={props.wrap ? "ETH amount" : "WETH amount"}
-                meta={{ error: errorMessage }}
-                onChange={e => validateAmout(e.target.value)} />
-
-            <CardActions>
+            <Grid item xs={8}>
+                <TextField
+                    value={amountToWrap}
+                    label={props.wrap ? "ETH amount" : "WETH amount"}
+                    meta={{ error: errorMessage }}
+                    onChange={e => validateAmout(e.target.value)} />
+            </Grid>
+            <Grid item xs={2}>
                 <Button size="md" color="primary" variant="contained" onClick={() => wrapEth()}>
                     {props.wrap ? "Wrap" : "Unwrap"}
                 </Button>
-            </CardActions>
-        </div>);
+            </Grid>
+        </Grid>);
 }
 
 export default Wrapper;
