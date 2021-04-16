@@ -1,7 +1,7 @@
 {
   "short_name": "ETH Wrapper",
   "name": "ETH Wrapper",
-  "description": "Wrap Ether and unwrap wETH",
+  "description": "Wrap ETH and unwrap WETH",
   "iconPath": "eth-wrapper-logo.png",
   "start_url": ".",
   "display": "standalone",
