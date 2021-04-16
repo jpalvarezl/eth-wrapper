@@ -27,7 +27,6 @@ const Wrapper: React.FC<WrapperProps> = (props: WrapperProps) => {
     const weth = useMemo(() => new ethers.Contract(getWethAddress(safe.network.toLowerCase()), Erc20, provider), [provider]);
 
     const wrapEth = useCallback(async () => {
-        validateAmout(amountToWrap);
         if (isError) {
             return;
         }
@@ -67,12 +66,16 @@ const Wrapper: React.FC<WrapperProps> = (props: WrapperProps) => {
     }, [sdk, amountToWrap, isError, props.wrap])
 
     useEffect(() => {
-        fetchAvailableEth();
-    }, [safe, sdk, props.wrap]);
+        const runEffect = async () => {
+            await fetchAvailableEth();
+            await validateAmout("");
+        };
+        runEffect();
+    }, [safe, sdk, props, availableBalance]);
 
     async function fetchAvailableEth() {
         var newValue = "0";
-        if (props.wrap){
+        if (props.wrap) {
             const balanceEth = await sdk.eth.getBalance([safe.safeAddress]);
             newValue = ethers.utils.formatEther(balanceEth);
         } else {
@@ -83,12 +86,14 @@ const Wrapper: React.FC<WrapperProps> = (props: WrapperProps) => {
     };
 
     const validateAmout = useCallback((newValue: string) => {
-        console.log(newValue);
+        console.log("available balance:", availableBalance);
         if (isNaN(Number(newValue))) {
             setIsError(true);
             setErrorMessage("Not a number");
         }
         else if (Number.parseFloat(newValue) > availableBalance) {
+            console.log("on switch new value ", Number.parseFloat(newValue));
+            console.log("on switch available balance", availableBalance);
             setIsError(true);
             setErrorMessage("Insufficient funds");
         }
@@ -97,7 +102,7 @@ const Wrapper: React.FC<WrapperProps> = (props: WrapperProps) => {
             setErrorMessage("");
             setAmountToWrap(newValue);
         }
-    }, [availableBalance])
+    }, [availableBalance, props])
 
     return (
         <Grid container spacing={3}>
